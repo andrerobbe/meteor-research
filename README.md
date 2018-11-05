@@ -28,18 +28,20 @@ Ik was op zoek naar Javascript frameworks en keek naar wat populair was. Ik wild
 Ik ben via google bij de [officiële site](https://www.meteor.com/install) van meteor begonnen voor de installatie ervan.
 
 #### Installatie voor windows:
--Eerst [Chocolaty](https://chocolatey.org/install) installeren
- -In cmd: `@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"`
--Daarna in cmd: `choco install meteor`
--Er komt een vraag in de CLI of het script mag runnen, antwoord `y`
-<img src="img/meteor-install.png" alt="" width="700"/>
+- Eerst [Chocolaty](https://chocolatey.org/install) installeren
+ - In cmd:
+ ```cmd
+ @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+ ```
+- Daarna in cmd: `choco install meteor`
+- Er komt een vraag in de CLI of het script mag runnen, antwoord `y`
 
 #### Installatie voor Mac:
--In cmd: `curl https://install.meteor.com/ | sh`
+- In cmd: `curl https://install.meteor.com/ | sh`
 
 
 Tijdens de installatie bleek de extracting stap super lang te duren.
-- `https://github.com/meteor/meteor/issues/7688`
+https://github.com/meteor/meteor/issues/7688
 <img src="img/meteor-install-extract.png" alt="" />
 Eerst heb ik naar mijn PATH variabelen gekeken zoals in de de comments van deze link staat. Daarna heb ik tijdelijk tar.exe in system32 gerenamed (gevonden via `where tar`), omdat Meteor hier ook mee werkt een conflicten kon geven. Uiteindelijk blijkt het deactiveren van windows firewall de oplossing te zijn, samen met heel veel gedueld. De installatie is traag alsook nieuwe apps maken.
 Met de firewall disabled schijnt er ook betere performance te zijn volgens meteor zelf.
@@ -58,7 +60,7 @@ Op een app te maken typen we in cmd `meteor create MyApp`, daarna ga je in de ma
 
 
 ### Simple ToDo List
-We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwerken zoals de tutorial. Die main app zit in de client folder. We passen de HTML en JS aan en maken een imports folder waarin we UI, API en startup aanmaken. Elke folder die imports heet wordt niet geladen en files moeten geïmporteerd worden door het gebruik van `import`. Voor meer informatie over mappenstructuur (zoals client en server) check [deze site](https://guide.meteor.com/structure.html#special-directories)
+We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwerken zoals de tutorial. Die main app zit in de client folder. We passen de HTML en JS aan en maken een imports folder waarin we UI, API en startup aanmaken. Elke folder die imports heet wordt niet geladen en files moeten geïmporteerd worden door het gebruik van `import`. Voor meer informatie over mappenstructuur (zoals client en server) check [deze site](https://guide.meteor.com/structure.html#special-directories).
 
 De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met `{{> templateName}}` of in JS met `Template.templateName`. Verder werkt Meteor met 'spacebars' packge voor het compilen. Check de Extra Resources voor meer informatie hierover. Dit gebruiken we ook in onze body.html in de import folder.
 <img src="img/body-html-1.png" alt="" />
@@ -144,7 +146,7 @@ Standaard heeft elke nieuwe Meteor App een package genaamd insecure. Hiermee kan
 
 In de api/tasks.js moeten we dus methods gaan aanmaken en de body.js en task.js updaten.
 
-api/tasks.js
+*api/tasks.js*
 ```Javascript
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
@@ -182,13 +184,13 @@ Meteor.methods({
 });
 ```
 
-ui/body.js
+*ui/body.js*
 ```javascript
 // Insert a task into the collection
 Meteor.call('tasks.insert', text);
 ```
 
-ui/task.js
+*ui/task.js*
 ```javascript
 Template.task.events({
   'click .toggle-checked'() {
@@ -309,36 +311,36 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
  - https://stackoverflow.com/questions/15252754/if-statements-in-handlebars
 
 
-
+<br><br><br><br><br>
 
 ## Logboek
-##### 5 okt 2018
+**5 okt 2018**
  - Installatie Meteor
  - Gezocht naar verschillende tutorials, uiteindelijk gekozen voor bovenstaande
  - Findings
  - Extra Resources
 
-##### 9 okt 2018
+**9 okt 2018**
  - Database, Forms en ReactiveDict
  - Extra Resources
 
-##### 15 okt 2018
+**15 okt 2018**
  - Account, lang geprobeerd om tasks per account te laten zien wat achteraf best wel simpel opgelost was.
  - Security
  - Findings
  - Extra Resources
 
-##### 23 okt 2018
+**23 okt 2018**
  - Publish & Subscribe
  - Getest (whatsapp clone)
  - Extra Resources
 
-##### 26 okt 2018
+**26 okt 2018**
  - Getest (whatsapp clone), veel errors
 
-##### 2 nov 2018
+**2 nov 2018**
  - Getest (whatsapp clone), proberen om errors op te lossen. Iemand anders heeft precies hetzelfde probleem gisteren op  [github](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60) gepost. Ik heb nog geen succes tot nu toe helaas.
  - Extra Resources
 
-##### 5 nov 2018
+**5 nov 2018**
  - Omzetten naar .md en uploaden naar git
