@@ -64,7 +64,7 @@ De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles i
 <img src="img/body-html-1.png" alt="" />
 
 
-###### Database
+##### Database
 We gaan nu een collectie van taken aanmaken en die laten importeren door de server. Een collectie is heel gemakkelijk aangemaakt via
 `import { Mongo } from 'meteor/mongo';
 export const Tasks = new Mongo.Collection('tasks');`
@@ -72,7 +72,7 @@ Dit plaatsen we in een nieuwe API folder.
 We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
 
 
-###### Forms
+##### Forms
 Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html en passen onze body.js aan voor de submit van de form.
 <img src="img/body-js-1.png" alt="" />
 De JS wacht hier op een submit event met de class `new-task`, haalt de value uit de form op en entered het in de Tasks collection (api/tasks.js)
@@ -82,7 +82,7 @@ De app ziet er nu als volgt uit:
 <img src="img/app-overview.png" alt="" />
 
 
-###### ReactiveDict
+##### ReactiveDict
 Alle tasks worden automatisch bijgewerkt als we onze collectie aanpassen. Dit is doordat Meteor weet wanneer data in Mongo.Collection wordt aangepast. ReactiveDict is op dezelfde manier, maar synced niet met de server waardoor het alleen geschikt is voor tijdelijke UI changes zoals filters. Op deze manier kan je bijvoorbeeld tijdelijk tasks die al klaar zijn niet laten zien. 
 ReactiveDict voeg je toe door in de CLI `meteor add reactive-dict` te typen. Vervolgens maak je een nieuwe ReactiveDict waar de status van een variabele zal worden opgeslagen, in dit geval de status van de checkbox. Met andere woorden of de filter aan staat of niet.
 Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal alles behalve de gecheckte boxes gereturned worden.
@@ -90,7 +90,7 @@ Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal
 <img src="img/app-overview-3.png" alt="" />
 
 
-###### Accounts
+##### Accounts
 Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app directory voegen we volgende packages toe: `meteor add accounts-ui accounts-password`. Door `{{> loginButtons}}` toe the voegen in the body.html en `import '../imports/startup/accounts-config.js';` in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je bijvoorbeeld per task zien van welke account die is.
 <img src="img/accounts.png" alt="" />
 
@@ -136,7 +136,7 @@ En onze template in task.html krijgt een if-statement:
 <img src="img/account-admin.png" alt="" />
 
 
-###### Security
+##### Security
 Standaard heeft elke nieuwe Meteor App een package genaamd insecure. Hiermee kan je makkelijk de database aanpassen, wat super handig is tijdens development, maar dit mag absoluut niet als het live gaat. We moeten deze package dus verwijderen en onze app aanpassen zodat het nog werkt:
 `meteor remove insecure`
 
@@ -208,7 +208,7 @@ Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een Meteo
 Dit betekend dat een nieuwe task al zal verschijnen voordat de server een antwoord geeft. Als het antwoord van de server overeenkomt met wat de client heeft gegenereerd, veranderd er niks en lijkt het gewoon sneller. Als het antwoord wel verschilt, zal de UI aangepast worden naar het antwoord van de server.
 
 
-###### Publish & subscribe
+##### Publish & subscribe
 [Zie Meteor Docs](https://guide.meteor.com/data-loading.html)
 Net zoals de package insecure is er nog een die er standaard is voor development, namelijk autopublish. Ook deze moeten we verwijderen voordat de app live gaat: `meteor remove autopublish`.
 Door deze te verwijderen kan de client geen Task.find() meer doen. Dit heeft als gevolg dat de data niet meer zo maar opgevraagd kan worden door elke gebruiker, dus het niet misbruikt zo kunnen worden om gevoelige informatie te verkrijgen.
