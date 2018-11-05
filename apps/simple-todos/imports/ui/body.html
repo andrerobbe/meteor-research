@@ -1,0 +1,31 @@
+<body>
+  <div class="container">
+    <header>
+      <h1>Todo List</h1>
+  
+      {{#if currentUser}}
+      <label class="hide-completed">
+        <input type="checkbox" />
+        Hide Completed Tasks
+      </label>
+      {{/if}}
+
+      {{> loginButtons}}
+
+      {{#if currentUser}}
+        <form class="new-task">
+          <input type="text" name="text" placeholder="Type to add new tasks" />
+        </form>
+      {{/if}}
+    </header>
+ 
+    {{#if currentUser}}
+    <ul>
+      {{#each tasks}} <!-- naam komt van body.js template.body.helpers -->
+          {{> task}}    <!-- naam komt van <template> tag in task.html   -->
+      {{/each}}
+    </ul>
+    {{/if}}
+  </div>
+</body>
+
