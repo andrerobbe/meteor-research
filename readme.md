@@ -2,21 +2,21 @@
 #Meteor Javascript Framework
 
 ##Inhoud
-[Waarom?](#waarom)
-[Wat heb ik gezocht?](#wat-heb-ik-gezocht)
-   [Installatie voor Windows](#installatie-voor-windows)
-   [Installatie voor Mac](#installatie-voor-mac)
- [Guide](#guide)
-  [Simple ToDo List](#simple-todo-list)
-  	[Database](#database)
-  	[Forms](#forms)
-    [ReactiveDict](#reactivedict)
-    [Account](#account)
-    [Security](#security)
-    [Publish & Subscribe](#publish-&-security)
-[Findings](#findings)
-[Extra Resources](#extra-resources)
-[Logboek](#logboek)
+- [Waarom?](#waarom)
+- [Wat heb ik gezocht?](#wat-heb-ik-gezocht)
+   - [Installatie voor Windows](#installatie-voor-windows)
+   - [Installatie voor Mac](#installatie-voor-mac)
+ - [Guide](#guide)
+ - [Simple ToDo List](#simple-todo-list)
+   - [Database](#database)
+   - [Forms](#forms)
+   - [ReactiveDict](#reactivedict)
+   - [Account](#account)
+   - [Security](#security)
+   - [Publish & Subscribe](#publish-&-security)
+- [Findings](#findings)
+- [Extra Resources](#extra-resources)
+- [Logboek](#logboek)
 
 
 
@@ -26,7 +26,7 @@ Ik was op zoek naar Javascript frameworks en keek naar wat populair was. Ik wild
 
 
 ##Wat heb ik gezocht?
-Ik ben via google bij de [officiele site](https://www.meteor.com/install) van meteor begonnen voor de installatie ervan.
+Ik ben via google bij de [officiële site](https://www.meteor.com/install) van meteor begonnen voor de installatie ervan.
 
 ####Installatie voor windows:
 -Eerst [Chocolaty](https://chocolatey.org/install) installeren
@@ -52,7 +52,7 @@ Als je een Meteor project cloned, vergeet dan niet om een `meteor npm install` t
 
 
 ###Guide
-Na de installatie ben ik naar een guide gaan zoeken voor meteor. [Dit](https://www.meteor.com/tutorials/blaze/creating-an-app) is de officiele tutorial van meteor zelf.
+Na de installatie ben ik naar een guide gaan zoeken voor meteor. [Dit](https://www.meteor.com/tutorials/blaze/creating-an-app) is de officiële tutorial van meteor zelf.
 
 Op een app te maken typen we in cmd `meteor create MyApp`, daarna ga je in de map MyApp en type je `meteor` om de app de starten op je localhost:3000.
 
@@ -311,32 +311,32 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
 
 ##Logboek
 ##### 5 okt 2018
-- Installatie Meteor
-- Gezocht naar verschillende tutorials, uiteindelijk gekozen voor bovenstaande
-- Findings
-- Extra Resources
+ - Installatie Meteor
+ - Gezocht naar verschillende tutorials, uiteindelijk gekozen voor bovenstaande
+ - Findings
+ - Extra Resources
 
 ##### 9 okt 2018
-- Database, Forms en ReactiveDict
-- Extra Resources
+ - Database, Forms en ReactiveDict
+ - Extra Resources
 
 ##### 15 okt 2018
-- Account, lang geprobeerd om tasks per account te laten zien wat achteraf best wel simpel opgelost was.
-- Security
-- Findings
-- Extra Resources
+ - Account, lang geprobeerd om tasks per account te laten zien wat achteraf best wel simpel opgelost was.
+ - Security
+ - Findings
+ - Extra Resources
 
 ##### 23 okt 2018
-- Publish & Subscribe
-- Getest (whatsapp clone)
-- Extra Resources
+ - Publish & Subscribe
+ - Getest (whatsapp clone)
+ - Extra Resources
 
 ##### 26 okt 2018
-- Getest (whatsapp clone), veel errors
+ - Getest (whatsapp clone), veel errors
 
 ##### 2 nov 2018
-- Getest (whatsapp clone), proberen om errors op te lossen. Iemand anders heeft precies hetzelfde probleem gisteren op  [github](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60) gepost. Ik heb nog geen succes tot nu toe helaas.
-- Extra Resources
+ - Getest (whatsapp clone), proberen om errors op te lossen. Iemand anders heeft precies hetzelfde probleem gisteren op  [github](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60) gepost. Ik heb nog geen succes tot nu toe helaas.
+ - Extra Resources
 
 ##### 5 nov 2018
-- Omzetten naar .md en uploaden naar git
+ - Omzetten naar .md en uploaden naar git
