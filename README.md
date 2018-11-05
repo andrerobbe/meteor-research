@@ -12,7 +12,7 @@
    - [ReactiveDict](#reactivedict)
    - [Account](#account)
    - [Security](#security)
-   - [Publish & Subscribe](#publish-&-security)
+   - [Publish & Subscribe](#publish--security)
 - [Findings](#findings)
 - [Extra Resources](#extra-resources)
 - [Logboek](#logboek)
@@ -32,7 +32,7 @@ Ik ben via google bij de [officiële site](https://www.meteor.com/install) van m
  -In cmd: `@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"`
 -Daarna in cmd: `choco install meteor`
 -Er komt een vraag in de CLI of het script mag runnen, antwoord `y`
-<img src="img/meteor-install.png" alt="" />
+<img src="img/meteor-install.png" alt="" width="700"/>
 
 #### Installatie voor Mac:
 -In cmd: `curl https://install.meteor.com/ | sh`
@@ -50,21 +50,21 @@ Als je een Meteor project cloned, vergeet dan niet om een `meteor npm install` t
 
 
 
-### Guide
+## Guide
 Na de installatie ben ik naar een guide gaan zoeken voor meteor. [Dit](https://www.meteor.com/tutorials/blaze/creating-an-app) is de officiële tutorial van meteor zelf.
 
 Op een app te maken typen we in cmd `meteor create MyApp`, daarna ga je in de map MyApp en type je `meteor` om de app de starten op je localhost:3000.
 
 
 
-#### Simple ToDo List
+### Simple ToDo List
 We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwerken zoals de tutorial. Die main app zit in de client folder. We passen de HTML en JS aan en maken een imports folder waarin we UI, API en startup aanmaken. Elke folder die imports heet wordt niet geladen en files moeten geïmporteerd worden door het gebruik van `import`. Voor meer informatie over mappenstructuur (zoals client en server) check [deze site](https://guide.meteor.com/structure.html#special-directories)
 
 De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met `{{> templateName}}` of in JS met `Template.templateName`. Verder werkt Meteor met 'spacebars' packge voor het compilen. Check de Extra Resources voor meer informatie hierover. Dit gebruiken we ook in onze body.html in de import folder.
 <img src="img/body-html-1.png" alt="" />
 
 
-##### Database
+#### Database
 We gaan nu een collectie van taken aanmaken en die laten importeren door de server. Een collectie is heel gemakkelijk aangemaakt via
 `import { Mongo } from 'meteor/mongo';
 export const Tasks = new Mongo.Collection('tasks');`
@@ -72,7 +72,7 @@ Dit plaatsen we in een nieuwe API folder.
 We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
 
 
-##### Forms
+#### Forms
 Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html en passen onze body.js aan voor de submit van de form.
 <img src="img/body-js-1.png" alt="" />
 De JS wacht hier op een submit event met de class `new-task`, haalt de value uit de form op en entered het in de Tasks collection (api/tasks.js)
@@ -82,7 +82,7 @@ De app ziet er nu als volgt uit:
 <img src="img/app-overview.png" alt="" />
 
 
-##### ReactiveDict
+#### ReactiveDict
 Alle tasks worden automatisch bijgewerkt als we onze collectie aanpassen. Dit is doordat Meteor weet wanneer data in Mongo.Collection wordt aangepast. ReactiveDict is op dezelfde manier, maar synced niet met de server waardoor het alleen geschikt is voor tijdelijke UI changes zoals filters. Op deze manier kan je bijvoorbeeld tijdelijk tasks die al klaar zijn niet laten zien. 
 ReactiveDict voeg je toe door in de CLI `meteor add reactive-dict` te typen. Vervolgens maak je een nieuwe ReactiveDict waar de status van een variabele zal worden opgeslagen, in dit geval de status van de checkbox. Met andere woorden of de filter aan staat of niet.
 Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal alles behalve de gecheckte boxes gereturned worden.
@@ -90,7 +90,7 @@ Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal
 <img src="img/app-overview-3.png" alt="" />
 
 
-##### Accounts
+#### Accounts
 Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app directory voegen we volgende packages toe: `meteor add accounts-ui accounts-password`. Door `{{> loginButtons}}` toe the voegen in the body.html en `import '../imports/startup/accounts-config.js';` in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je bijvoorbeeld per task zien van welke account die is.
 <img src="img/accounts.png" alt="" />
 
@@ -100,20 +100,20 @@ In body.js geven we met de insert mee welke userId de task heeft aangemaakt:
 
 ```Javascript
 Tasks.insert({
-			text,
-			createdAt: new Date(), // current time
-			owner: Meteor.userId(),
-			username: Meteor.user().username,
-		});
+  text,
+  createdAt: new Date(), // current time
+  owner: Meteor.userId(),
+  username: Meteor.user().username,
+});
 ```
 
 In task.js voegen we een helper toe om te checken of de owner van de task dezelfde user is als de ingelogde user:
 
 ```Javascript
 Template.task.helpers({
-	isOwner: function(){
-		return this.owner === Meteor.userId();
-	},
+  isOwner: function(){
+    return this.owner === Meteor.userId();
+  },
 });
 ```
 
@@ -121,13 +121,15 @@ En onze template in task.html krijgt een if-statement:
 
 ```Javascript
 <template name="task">
-	{{#if isOwner}}
-		<li class="{{#if checked}}checked{{/if}}">
-			<button class="delete">&times;</button>
-			<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-			<span class="text">{{text}}</span>
-		</li>
-	{{/if}}
+  {{#if isOwner}}
+    <li class="{{#if checked}}checked{{/if}}">
+      <button class="delete">&times;</button>
+
+      <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+      <span class="text">{{text}}</span>
+    </li>
+  {{/if}}
 </template>
 ```
 
@@ -136,7 +138,7 @@ En onze template in task.html krijgt een if-statement:
 <img src="img/account-admin.png" alt="" />
 
 
-##### Security
+#### Security
 Standaard heeft elke nieuwe Meteor App een package genaamd insecure. Hiermee kan je makkelijk de database aanpassen, wat super handig is tijdens development, maar dit mag absoluut niet als het live gaat. We moeten deze package dus verwijderen en onze app aanpassen zodat het nog werkt:
 `meteor remove insecure`
 
@@ -182,24 +184,25 @@ Meteor.methods({
 
 ui/body.js
 ```javascript
-	// Insert a task into the collection
-	Meteor.call('tasks.insert', text);
+// Insert a task into the collection
+Meteor.call('tasks.insert', text);
 ```
 
 ui/task.js
 ```javascript
 Template.task.events({
-	'click .toggle-checked'() {
-		// Set the checked property to the opposite of its current value
-		Meteor.call('tasks.setChecked', this._id, !this.checked);
-	},
-	'click .delete'() {
-		Meteor.call('tasks.remove', this._id);
-	},
+  'click .toggle-checked'() {
+    // Set the checked property to the opposite of its current value
+    Meteor.call('tasks.setChecked', this._id, !this.checked);
+  },
+  'click .delete'() {
+    Meteor.call('tasks.remove', this._id);
+  },
 });
 ```
 
-**Optimistic UI**
+***Optimistic UI***
+
 We definiëren de metods op zowel de client als server side zodat er een *optimistic ui* bestaat. 
 Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een Meteor.call gebeurd, namelijk
  - een request wordt naar de server gestuurd
@@ -208,7 +211,7 @@ Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een Meteo
 Dit betekend dat een nieuwe task al zal verschijnen voordat de server een antwoord geeft. Als het antwoord van de server overeenkomt met wat de client heeft gegenereerd, veranderd er niks en lijkt het gewoon sneller. Als het antwoord wel verschilt, zal de UI aangepast worden naar het antwoord van de server.
 
 
-##### Publish & subscribe
+#### Publish & subscribe
 [Zie Meteor Docs](https://guide.meteor.com/data-loading.html)
 Net zoals de package insecure is er nog een die er standaard is voor development, namelijk autopublish. Ook deze moeten we verwijderen voordat de app live gaat: `meteor remove autopublish`.
 Door deze te verwijderen kan de client geen Task.find() meer doen. Dit heeft als gevolg dat de data niet meer zo maar opgevraagd kan worden door elke gebruiker, dus het niet misbruikt zo kunnen worden om gevoelige informatie te verkrijgen.
@@ -273,36 +276,36 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
 
 
 ## Extra Resources
--Official Meteor Docs
+- Official Meteor Docs
  - https://docs.meteor.com/
--Repository of packages for Meteor
+- Repository of packages for Meteor
  - https://atmospherejs.com/
- -Organized list of Meteor Packages
+- Organized list of Meteor Packages
   - https://github.com/Urigo/awesome-meteor
- -Meteor Spacebar Compiler Docs
+- Meteor Spacebar Compiler Docs
   - http://blazejs.org/api/spacebars.html
- -Meteor ReactiveDict Packages
+- Meteor ReactiveDict Packages
   - https://atmospherejs.com/meteor/reactive-dict
--Youtube Series on Meteor
+- Youtube Series on Meteor
  - https://www.youtube.com/watch?v=4l4pG0a25qs&index=2&list=PLLnpHn493BHFYZUSK62aVycgcAouqBt7V
--Meteor Account Documentation
+- Meteor Account Documentation
  - https://docs.meteor.com/api/accounts.html
--MongoDB Docs
+- MongoDB Docs
  - https://docs.mongodb.com/v3.2/reference/
--Mongol Meteor devtools
+- Mongol Meteor devtools
  - https://github.com/msavin/Mongol-meteor-devtools
--Meteor Development Tools
+- Meteor Development Tools
  - http://meteor.toys/
--WhatsApp Clone
+- WhatsApp Clone
  - https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping
 
--Direct download for Meteor installation package
+- Direct download for Meteor installation package
  - https://packages.meteor.com/bootstrap-link?arch=os.windows.x86_64
--Check PATH variable on windows
+- Check PATH variable on windows
  - https://www.computerhope.com/issues/ch000549.htm
--Meteor onLogin event
+- Meteor onLogin event
  - https://stackoverflow.com/questions/16350424/meteor-js-on-login-event
--If statements in Handlebars
+- If statements in Handlebars
  - https://stackoverflow.com/questions/15252754/if-statements-in-handlebars
 
 
