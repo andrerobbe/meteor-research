@@ -49,7 +49,7 @@ Tijdens de installatie bleek de extracting stap super lang te duren. [Zie issue 
 <img src="img/meteor-install-extract.PNG" alt="" />
 Eerst heb ik naar mijn PATH variabelen gekeken zoals in de de comments van deze link staat. Daarna heb ik tijdelijk tar.exe in system32 gerenamed (gevonden via `where tar`), omdat Meteor hier ook mee werkt een conflicten kon geven. Uiteindelijk blijkt het deactiveren van windows firewall de oplossing te zijn, samen met heel veel gedueld. De installatie is traag alsook nieuwe apps maken.
 Met de firewall disabled schijnt er ook betere performance te zijn volgens meteor zelf.
-Als alles goed is krijg je het volgende te zien:<br>
+Als alles goed is krijg je het volgende te zien:<br><br>
 
 <img src="img/meteor-install-succes.PNG" alt="" />
 
@@ -67,7 +67,7 @@ Op een app te maken typen we in cmd '`meteor create MyApp`', daarna ga je in de 
 ### Simple ToDo List
 We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwerken zoals de tutorial. Die main app zit in de client folder. We passen de HTML en JS aan en maken een imports folder waarin we UI, API en startup aanmaken. Elke folder die imports heet wordt niet geladen en files moeten geïmporteerd worden door het gebruik van `import`. Voor meer informatie over mappenstructuur (zoals client en server) check [deze site](https://guide.meteor.com/structure.html#special-directories).
 
-De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met '`{{> templateName}}`' of in JS met '`Template.templateName`'. Verder werkt Meteor met 'spacebars' package voor het compilen. Check de [extra resources](#extra-resources) voor meer informatie hierover. Deze package gebruiken we ook in onze body.html in de import folder.<br>
+De HTML in Meteor heeft naast body en head tags ook de '`<template>`' tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met '`{{> templateName}}`' of in JS met '`Template.templateName`'. Verder werkt Meteor met 'spacebars' package voor het compilen. Check de [extra resources](#extra-resources) voor meer informatie hierover. Deze package gebruiken we ook in onze body.html in de import folder.<br>
 
 <img src="img/body-html-1.PNG" alt="" /><br><br>
 
@@ -75,7 +75,9 @@ De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles i
 
 #### Database
 We gaan nu een collectie van taken aanmaken en die laten importeren door de server. Een collectie is heel gemakkelijk aangemaakt via
-```
+
+*api/tasks.js*
+```Javascript
 import { Mongo } from 'meteor/mongo';
 export const Tasks = new Mongo.Collection('tasks');
 ```
@@ -93,7 +95,7 @@ Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan o
 
 Javascript wacht hier op een submit event van een form met de class '`new-task`', haalt de value uit de form op en voegt het toe aan de Tasks collection (api/tasks.js)
 
-Voor het checken en deleten van tasks maken we twee nieuwe files aan, task.html en task.js. Je kan deze importeren in main.js d.m.v. '`import '../imports/ui/task.js';`'' te doen. Ook moet je in de task.js geen template importeren zoals de tutorial aangeeft, want dit gebeurd al in body.js
+Voor het checken en deleten van tasks maken we twee nieuwe files aan, task.html en task.js. Je kan deze importeren in main.js d.m.v. '`import '../imports/ui/task.js';`' te doen. Ook moet je in de task.js geen template importeren zoals de tutorial aangeeft, want dit gebeurd al in body.js
 De app ziet er nu als volgt uit:<br><br>
 
 <img src="img/app-overview.PNG" alt="" /><br><br>
@@ -118,7 +120,7 @@ Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal
 *ui/body.js*
 ```Javascript
 import { Template } from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict'; //new for reactivedict
+import { ReactiveDict } from 'meteor/reactive-dict'; //import for reactivedict
 
 import { Tasks } from '../api/tasks.js';
 
@@ -126,7 +128,7 @@ import './task.js';
 import './body.html';
 
 
-//new for reactivedict
+//setup new ReactiveDict and attach it to the body template
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
 });
@@ -134,7 +136,8 @@ Template.body.onCreated(function bodyOnCreated() {
 
 Template.body.helpers({
   tasks() {
-    //new for reactivedict
+    //filter results if ReactiveDict checkbox is checked
+
     const instance = Template.instance();
     if (instance.state.get('hideCompleted')) {
       // If hide completed is checked, filter tasks
@@ -160,7 +163,7 @@ Template.body.events({
     target.text.value = '';
   },
 
-  //new for reactivedict
+  //update the state when checkbox is changed
   'change .hide-completed input'(event, instance) {
     instance.state.set('hideCompleted', event.target.checked);
   },
@@ -175,14 +178,13 @@ Template.body.events({
 
 
 #### Accounts
-Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app directory voegen we volgende packages toe: '`meteor add accounts-ui accounts-password`'. Door '`{{> loginButtons}}`' toe the voegen in the body.html en '`import '../imports/startup/accounts-config.js';`' in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je bijvoorbeeld per task zien van welke account die is.<br><br>
+Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app folder voegen we volgende packages toe via CLI: '`meteor add accounts-ui accounts-password`'. Door '`{{> loginButtons}}`' toe the voegen in the body.html en '`import '../imports/startup/accounts-config.js';`' in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je met een klein beetje code bijvoorbeeld per task zien van welke account die is.<br><br>
 
 <img src="img/accounts.PNG" alt="" /><br><br>
 
 
 Op deze manier kan je bijvoorbeeld ook content enkel voor het juiste account laten zien. 
 In body.js geven we met de insert mee welke '`userId()`' de task heeft aangemaakt:
-
 ```Javascript
 Tasks.insert({
   text,
@@ -194,7 +196,6 @@ Tasks.insert({
 
 
 In task.js voegen we een helper toe om te checken of de owner van de task dezelfde user is als de ingelogde user:
-
 ```Javascript
 Template.task.helpers({
   isOwner: function(){
@@ -205,7 +206,6 @@ Template.task.helpers({
 
 
 En onze template in task.html krijgt een if-statement:
-
 ```HTML
 <template name="task">
   {{#if isOwner}}
@@ -222,6 +222,8 @@ En onze template in task.html krijgt een if-statement:
 
 ([Zie youtube tutorial](https://www.youtube.com/watch?v=v9n9jkwunzU&list=PLLnpHn493BHECNl9I8gwos-hEfFrer7TV&index=19))
 <br><br>
+
+
 <img src="img/account-bert.PNG" alt="" /><br>
 <img src="img/account-admin.PNG" alt="" /><br><br>
 
@@ -313,7 +315,7 @@ Door deze te verwijderen kan de client geen Task.find() meer doen. Dit heeft als
 Het andere gevolg is, is dat onze app niet meer werkt en dit moeten oplossen d.m.v. Meteor.publish en Meteor.subscribe.
 
 
-In api/tasks.js doen we het volgende:
+*api/tasks.js*
 ```Javascript
 if (Meteor.isServer) {
   // This code only runs on the server
@@ -324,7 +326,7 @@ if (Meteor.isServer) {
 ```
 
 
-In ui/body.js doen het volgende:
+*ui/body.js*
 ```Javascript
 Template.body.onCreated(function bodyOnCreated() {
  	this.state = new ReactiveDict();
@@ -354,13 +356,13 @@ if (Meteor.isServer) {
 <br><br>
 
 ## Getest
-Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping) gevolgt (niet zelf gemaakt). Per stap heb ik de code gedownload, uitgeprobeerd en proberen te begrijpen. De meeste stappen snapte ik wel, maar om het zelf te maken is op het moment nog moeilijk. Helaas veel errors tegen gekomen vanaf stap vier, zonder ze te kunnen oplossen. Zie [logboek](#logboek) 2 november.<br>
+Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping) gevolgt (niet zelf gemaakt). Per stap heb ik de code gedownload, uitgeprobeerd en proberen te begrijpen. De meeste stappen snapte ik wel, maar om het zelf te maken is op het moment nog moeilijk. Helaas ben ik veel errors tegen gekomen vanaf stap vier, zonder ze te kunnen oplossen. Zie [logboek](#logboek) 2 november.<br>
 
 <img src="img/whatsapp-3.PNG" alt="" />
 <img src="img/whatsapp-4.PNG" alt="" /><br>
 <img src="img/whatsapp-4-error.PNG" alt="" />
 
-<br><br>
+<br><br><br>
 
 
 ## Findings
