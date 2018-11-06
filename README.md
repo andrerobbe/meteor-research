@@ -11,7 +11,7 @@
  - [Simple ToDo List](#simple-todo-list)
    - [Database](#database)
    - [Forms](#forms)
-   - [ReactiveDict](#reactivedict)
+   - [Reactive Dictionary](#reactive-dictionary)
    - [Account](#account)
    - [Security](#security)
    - [Publish & Subscribe](#publish--subscribe)
@@ -35,13 +35,13 @@ Ik ben via google bij de [officiële site](https://www.meteor.com/install) van m
  ```cmd
  @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
  ```
-- Daarna in cmd: `choco install meteor`
-- Er komt een vraag in de CLI of het script mag runnen, antwoord `y`
+- Daarna in cmd: '`choco install meteor`'
+- Er komt een vraag in de CLI of het script mag runnen, antwoord '`y`'
 <img src="img/meteor-install.PNG" alt="" /><br>
 
 
 #### Installatie voor Mac:
-- In cmd: `curl https://install.meteor.com/ | sh`
+- In cmd: '`curl https://install.meteor.com/ | sh`'
 
 
 Tijdens de installatie bleek de extracting stap super lang te duren. [Zie issue #7688](https://github.com/meteor/meteor/issues/7688)<br>
@@ -60,14 +60,14 @@ Als je een Meteor project cloned, vergeet dan niet om een `meteor npm install` t
 ## Guide
 Na de installatie ben ik naar een guide gaan zoeken voor meteor. [Dit](https://www.meteor.com/tutorials/blaze/creating-an-app) is de officiële tutorial van meteor zelf.
 
-Op een app te maken typen we in cmd `meteor create MyApp`, daarna ga je in de map MyApp en type je `meteor` om de app de starten op je localhost:3000.
+Op een app te maken typen we in cmd '`meteor create MyApp`', daarna ga je in de map MyApp en type je '`meteor`' om de app de starten op je localhost:3000.
 
 
 
 ### Simple ToDo List
 We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwerken zoals de tutorial. Die main app zit in de client folder. We passen de HTML en JS aan en maken een imports folder waarin we UI, API en startup aanmaken. Elke folder die imports heet wordt niet geladen en files moeten geïmporteerd worden door het gebruik van `import`. Voor meer informatie over mappenstructuur (zoals client en server) check [deze site](https://guide.meteor.com/structure.html#special-directories).
 
-De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met `{{> templateName}}` of in JS met `Template.templateName`. Verder werkt Meteor met 'spacebars' packge voor het compilen. Check de Extra Resources voor meer informatie hierover. Dit gebruiken we ook in onze body.html in de import folder.<br>
+De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met '`{{> templateName}}`' of in JS met '`Template.templateName`'. Verder werkt Meteor met 'spacebars' package voor het compilen. Check de [extra resources](#extra-resources) voor meer informatie hierover. Deze package gebruiken we ook in onze body.html in de import folder.<br>
 
 <img src="img/body-html-1.PNG" alt="" /><br><br>
 
@@ -75,32 +75,98 @@ De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles i
 
 #### Database
 We gaan nu een collectie van taken aanmaken en die laten importeren door de server. Een collectie is heel gemakkelijk aangemaakt via
-`import { Mongo } from 'meteor/mongo';
-export const Tasks = new Mongo.Collection('tasks');`
-Dit plaatsen we in een nieuwe API folder.
-We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld: `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
+```
+import { Mongo } from 'meteor/mongo';
+export const Tasks = new Mongo.Collection('tasks');
+```
+
+Dit plaatsen we in de API folder.
+We kunnen onze database via de CLI gebruiken door '`meteor mongo`' te typen en daarin een task in te geven zoals bijvoorbeeld: '`db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`'.
 
 <br>
 
 #### Forms
-Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html en passen onze body.js aan voor de submit van de form.<br>
+Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html met de class '`new-task`' en passen onze body.js aan voor de submit van de form.<br>
 
 <img src="img/body-js-1.PNG" alt="" /><br>
 
 
-De JS wacht hier op een submit event met de class `new-task`, haalt de value uit de form op en entered het in de Tasks collection (api/tasks.js)
+Javascript wacht hier op een submit event van een form met de class '`new-task`', haalt de value uit de form op en voegt het toe aan de Tasks collection (api/tasks.js)
 
-Voor het checken en deleten van tasks maken we twee nieuwe files aan, task.html en task.js. Je kan deze importeren in main.js `import '../imports/ui/task.js';` Ook moet je in de task.js geen template importeren zoals de tutorial aangeeft, want dit gebeurd al in body.js
-De app ziet er nu als volgt uit:<br>
+Voor het checken en deleten van tasks maken we twee nieuwe files aan, task.html en task.js. Je kan deze importeren in main.js d.m.v. '`import '../imports/ui/task.js';`'' te doen. Ook moet je in de task.js geen template importeren zoals de tutorial aangeeft, want dit gebeurd al in body.js
+De app ziet er nu als volgt uit:<br><br>
 
 <img src="img/app-overview.PNG" alt="" /><br><br>
 
 
 
-#### ReactiveDict
-Alle tasks worden automatisch bijgewerkt als we onze collectie aanpassen. Dit is doordat Meteor weet wanneer data in Mongo.Collection wordt aangepast. ReactiveDict is op dezelfde manier, maar synced niet met de server waardoor het alleen geschikt is voor tijdelijke UI changes zoals filters. Op deze manier kan je bijvoorbeeld tijdelijk tasks die al klaar zijn niet laten zien. 
-ReactiveDict voeg je toe door in de CLI `meteor add reactive-dict` te typen. Vervolgens maak je een nieuwe ReactiveDict waar de status van een variabele zal worden opgeslagen, in dit geval de status van de checkbox. Met andere woorden of de filter aan staat of niet.
-Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal alles behalve de gecheckte boxes gereturned worden.<br>
+#### Reactive Dictionary
+Alle tasks worden automatisch bijgewerkt als we onze collectie aanpassen. Dit is doordat Meteor weet wanneer data in '`Mongo.Collection`' wordt aangepast. ReactiveDict is op dezelfde manier, maar synchroniseert niet met de server waardoor het alleen geschikt is voor tijdelijke UI changes zoals filters. Op deze manier kan je bijvoorbeeld tijdelijk tasks die al klaar zijn niet laten zien.
+
+ReactiveDict voeg je toe door in de CLI '`meteor add reactive-dict`' te typen. Vervolgens maak je een nieuwe ReactiveDict waar de status van een variabele zal worden opgeslagen, in dit geval de status van de checkbox. Met andere woorden of de filter aan staat of niet.
+Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal alles behalve de gecheckte boxes gereturned worden.<br><br>
+
+*ui/body.html*
+```HTML
+      <label class="hide-completed">
+        <input type="checkbox" />
+        Hide Completed Tasks
+      </label>
+});
+```
+
+*ui/body.js*
+```Javascript
+import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict'; //new for reactivedict
+
+import { Tasks } from '../api/tasks.js';
+
+import './task.js';
+import './body.html';
+
+
+//new for reactivedict
+Template.body.onCreated(function bodyOnCreated() {
+  this.state = new ReactiveDict();
+});
+
+
+Template.body.helpers({
+  tasks() {
+    //new for reactivedict
+    const instance = Template.instance();
+    if (instance.state.get('hideCompleted')) {
+      // If hide completed is checked, filter tasks
+      return Tasks.find({ checked: { $ne: true } }, { sort: { createdAt: -1 } });
+    }
+    // Otherwise, return all of the tasks
+    return Tasks.find({}, { sort: { createdAt: -1 } });
+  },
+});
+
+Template.body.events({
+  'submit .new-task'(event) {
+    event.preventDefault();
+
+    const target = event.target;
+    const text = target.text.value;
+
+    Tasks.insert({
+      text,
+      createdAt: new Date(), // current time
+    });
+
+    target.text.value = '';
+  },
+
+  //new for reactivedict
+  'change .hide-completed input'(event, instance) {
+    instance.state.set('hideCompleted', event.target.checked);
+  },
+});
+```
+<br><br>
 
 <img src="img/app-overview-2.PNG" alt="" /><br>
 
@@ -109,13 +175,13 @@ Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal
 
 
 #### Accounts
-Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app directory voegen we volgende packages toe: `meteor add accounts-ui accounts-password`. Door `{{> loginButtons}}` toe the voegen in the body.html en `import '../imports/startup/accounts-config.js';` in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je bijvoorbeeld per task zien van welke account die is.<br>
+Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app directory voegen we volgende packages toe: '`meteor add accounts-ui accounts-password`'. Door '`{{> loginButtons}}`' toe the voegen in the body.html en '`import '../imports/startup/accounts-config.js';`' in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je bijvoorbeeld per task zien van welke account die is.<br><br>
 
 <img src="img/accounts.PNG" alt="" /><br><br>
 
 
 Op deze manier kan je bijvoorbeeld ook content enkel voor het juiste account laten zien. 
-In body.js geven we met de insert mee welke userId de task heeft aangemaakt:
+In body.js geven we met de insert mee welke '`userId()`' de task heeft aangemaakt:
 
 ```Javascript
 Tasks.insert({
@@ -126,6 +192,7 @@ Tasks.insert({
 });
 ```
 
+
 In task.js voegen we een helper toe om te checken of de owner van de task dezelfde user is als de ingelogde user:
 
 ```Javascript
@@ -135,6 +202,7 @@ Template.task.helpers({
   },
 });
 ```
+
 
 En onze template in task.html krijgt een if-statement:
 
@@ -161,7 +229,7 @@ En onze template in task.html krijgt een if-statement:
 
 #### Security
 Standaard heeft elke nieuwe Meteor App een package genaamd insecure. Hiermee kan je makkelijk de database aanpassen, wat super handig is tijdens development, maar dit mag absoluut niet als het live gaat. We moeten deze package dus verwijderen en onze app aanpassen zodat het nog werkt:
-`meteor remove insecure`
+'`meteor remove insecure`'
 
 In de api/tasks.js moeten we dus methods gaan aanmaken en de body.js en task.js updaten.
 
@@ -203,11 +271,13 @@ Meteor.methods({
 });
 ```
 
+
 *ui/body.js*
 ```javascript
 // Insert a task into the collection
 Meteor.call('tasks.insert', text);
 ```
+
 
 *ui/task.js*
 ```javascript
@@ -221,25 +291,27 @@ Template.task.events({
   },
 });
 ```
-
+<br>
 
 
 *Optimistic UI*
 
 We definiëren de metods op zowel de client als server side zodat er een *optimistic ui* bestaat. 
-Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een Meteor.call gebeurd, namelijk
+Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een '`Meteor.call`' gebeurd, namelijk
  - een request wordt naar de server gestuurd
- - de client runt ook een simulatie in de tussentijd
+ - de client runt een simulatie in de tussentijd
 
 Dit betekend dat een nieuwe task al zal verschijnen voordat de server een antwoord geeft. Als het antwoord van de server overeenkomt met wat de client heeft gegenereerd, veranderd er niks en lijkt het gewoon sneller. Als het antwoord wel verschilt, zal de UI aangepast worden naar het antwoord van de server.
 
 <br>
 
+
 #### Publish & subscribe
 [Zie Meteor Docs](https://guide.meteor.com/data-loading.html)<br>
-Net zoals de package insecure is er nog een die er standaard is voor development, namelijk autopublish. Ook deze moeten we verwijderen voordat de app live gaat: `meteor remove autopublish`.
+Net zoals de package insecure is er nog een die er standaard is voor development, namelijk autopublish. Ook deze moeten we verwijderen voordat de app live gaat: '`meteor remove autopublish`'.<br>
 Door deze te verwijderen kan de client geen Task.find() meer doen. Dit heeft als gevolg dat de data niet meer zo maar opgevraagd kan worden door elke gebruiker, dus het niet misbruikt zo kunnen worden om gevoelige informatie te verkrijgen.
 Het andere gevolg is, is dat onze app niet meer werkt en dit moeten oplossen d.m.v. Meteor.publish en Meteor.subscribe.
+
 
 In api/tasks.js doen we het volgende:
 ```Javascript
@@ -251,6 +323,7 @@ if (Meteor.isServer) {
 }
 ```
 
+
 In ui/body.js doen het volgende:
 ```Javascript
 Template.body.onCreated(function bodyOnCreated() {
@@ -260,8 +333,10 @@ Template.body.onCreated(function bodyOnCreated() {
 });
 ```
 
+
 De Tasks.find() wordt nu dus op de server uitgevoerd, en er wordt dan op gesubscribed. Hierdoor kan je met private en public data werken, bijvoorbeeld door het volgende te doen:
 
+*api/tasks.js*
 ```Javascript
 if (Meteor.isServer) {
   // This code only runs on the server
@@ -292,9 +367,9 @@ Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsap
 - Interessant is dat er nog meerdere mogelijkheden zijn om je app te beginnen.
   <img src="img/app-template.PNG" alt="" />
 
-- NPM hoeft niet geïnstalleerd te zijn ookal gebruikt Meteor dit wel. Dit komt doordat het in Meteor zelf zit. Je kan dus `meteor npm install` doen. Zie ook [deze link](https://guide.meteor.com/using-npm-packages.html#installing-npm) voor informatie rond --save, -dev en --production
+- NPM hoeft niet geïnstalleerd te zijn ookal gebruikt Meteor dit wel. Dit komt doordat het in Meteor zelf zit. Je kan dus '`meteor npm install`' doen. Zie ook [deze link](https://guide.meteor.com/using-npm-packages.html#installing-npm) voor informatie rond --save, -dev en --production
 
-- Je kan de app runnen in een IOS of Android emulator d.m.v. `meteor add-platform ios` of `meteor add-platform android`.
+- Je kan de app runnen in een IOS of Android emulator d.m.v. '`meteor add-platform ios`' of '`meteor add-platform android`'.
 
 - De pure JS implentatie van bcrypt (login) werkt, maar is veel langzamer.<br>
   <img src="img/account-package.PNG" alt="" /><br>
@@ -314,7 +389,7 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
   - https://github.com/Urigo/awesome-meteor
 - Meteor Spacebar Compiler Docs
   - http://blazejs.org/api/spacebars.html
-- Meteor ReactiveDict Packages
+- Meteor Reactive Dictionary Packages
   - https://atmospherejs.com/meteor/reactive-dict
 - Youtube Series on Meteor
   - https://www.youtube.com/watch?v=4l4pG0a25qs&index=2&list=PLLnpHn493BHFYZUSK62aVycgcAouqBt7V
@@ -352,7 +427,7 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
  - Extra Resources
 
 **9 okt 2018**
- - Database, Forms en ReactiveDict
+ - Database, Forms en Reactive Dictionary
  - Extra Resources
 
 **15 okt 2018**
@@ -373,5 +448,9 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
  - Getest (whatsapp clone), proberen om errors op te lossen. Iemand anders heeft precies hetzelfde probleem gisteren op [github](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60) gepost. Ik heb nog geen succes tot nu toe helaas.
  - Extra Resources
 
-**5 / 6 nov 2018**
+**5 nov 2018**
  - Omzetten naar .md en uploaden naar git
+
+ **6 nov 2018**
+ - Kleine aanpassingen in text/layout
+ - Reactive Dictionary code
