@@ -233,7 +233,7 @@ Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een Meteo
 
 Dit betekend dat een nieuwe task al zal verschijnen voordat de server een antwoord geeft. Als het antwoord van de server overeenkomt met wat de client heeft gegenereerd, veranderd er niks en lijkt het gewoon sneller. Als het antwoord wel verschilt, zal de UI aangepast worden naar het antwoord van de server.
 
-
+<br>
 
 #### Publish & subscribe
 [Zie Meteor Docs](https://guide.meteor.com/data-loading.html)<br>
