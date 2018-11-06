@@ -15,6 +15,7 @@
    - [Account](#account)
    - [Security](#security)
    - [Publish & Subscribe](#publish--subscribe)
+- [Getest](#getest)
 - [Findings](#findings)
 - [Extra Resources](#extra-resources)
 - [Logboek](#logboek)
