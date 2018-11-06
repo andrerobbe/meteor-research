@@ -14,7 +14,7 @@
    - [ReactiveDict](#reactivedict)
    - [Account](#account)
    - [Security](#security)
-   - [Publish & Subscribe](#publish--security)
+   - [Publish & Subscribe](#publish--subscribe)
 - [Findings](#findings)
 - [Extra Resources](#extra-resources)
 - [Logboek](#logboek)
@@ -24,7 +24,7 @@
 ## Waarom?
 Ik was op zoek naar Javascript frameworks en keek naar wat populair was. Ik wilde eigenlijk met Vue beginnen, maar aangezien dit al een veel gekozen onderwerp is en het op stage op bod kan komen, ben ik overgestapt naar Meteor.
 
-
+<br>
 
 ## Wat heb ik gezocht?
 Ik ben via google bij de [officiële site](https://www.meteor.com/install) van meteor begonnen voor de installatie ervan.
@@ -45,15 +45,17 @@ Ik ben via google bij de [officiële site](https://www.meteor.com/install) van m
 
 
 Tijdens de installatie bleek de extracting stap super lang te duren. [Zie issue #7688](https://github.com/meteor/meteor/issues/7688)<br>
+
 <img src="img/meteor-install-extract.PNG" alt="" />
 Eerst heb ik naar mijn PATH variabelen gekeken zoals in de de comments van deze link staat. Daarna heb ik tijdelijk tar.exe in system32 gerenamed (gevonden via `where tar`), omdat Meteor hier ook mee werkt een conflicten kon geven. Uiteindelijk blijkt het deactiveren van windows firewall de oplossing te zijn, samen met heel veel gedueld. De installatie is traag alsook nieuwe apps maken.
 Met de firewall disabled schijnt er ook betere performance te zijn volgens meteor zelf.
 Als alles goed is krijg je het volgende te zien:<br>
+
 <img src="img/meteor-install-succes.PNG" alt="" />
 
 Als je een Meteor project cloned, vergeet dan niet om een `meteor npm install` te doen! Npm hoeft niet apart geïnstalleerd te zijn doordat dit in Meteor zit.
 
-
+<br>
 
 ## Guide
 Na de installatie ben ik naar een guide gaan zoeken voor meteor. [Dit](https://www.meteor.com/tutorials/blaze/creating-an-app) is de officiële tutorial van meteor zelf.
@@ -66,7 +68,8 @@ Op een app te maken typen we in cmd `meteor create MyApp`, daarna ga je in de ma
 We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwerken zoals de tutorial. Die main app zit in de client folder. We passen de HTML en JS aan en maken een imports folder waarin we UI, API en startup aanmaken. Elke folder die imports heet wordt niet geladen en files moeten geïmporteerd worden door het gebruik van `import`. Voor meer informatie over mappenstructuur (zoals client en server) check [deze site](https://guide.meteor.com/structure.html#special-directories).
 
 De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met `{{> templateName}}` of in JS met `Template.templateName`. Verder werkt Meteor met 'spacebars' packge voor het compilen. Check de Extra Resources voor meer informatie hierover. Dit gebruiken we ook in onze body.html in de import folder.<br>
-<img src="img/body-html-1.PNG" alt="" />
+
+<img src="img/body-html-1.PNG" alt="" /><br>
 
 
 
@@ -77,10 +80,11 @@ export const Tasks = new Mongo.Collection('tasks');`
 Dit plaatsen we in een nieuwe API folder.
 We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
 
-
+<br>
 
 #### Forms
 Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html en passen onze body.js aan voor de submit van de form.<br>
+
 <img src="img/body-js-1.PNG" alt="" /><br>
 
 
@@ -88,7 +92,8 @@ De JS wacht hier op een submit event met de class `new-task`, haalt de value uit
 
 Voor het checken en deleten van tasks maken we twee nieuwe files aan, task.html en task.js. Je kan deze importeren in main.js `import '../imports/ui/task.js';` Ook moet je in de task.js geen template importeren zoals de tutorial aangeeft, want dit gebeurd al in body.js
 De app ziet er nu als volgt uit:<br>
-<img src="img/app-overview.PNG" alt="" />
+
+<img src="img/app-overview.PNG" alt="" /><br><br>
 
 
 
@@ -96,13 +101,17 @@ De app ziet er nu als volgt uit:<br>
 Alle tasks worden automatisch bijgewerkt als we onze collectie aanpassen. Dit is doordat Meteor weet wanneer data in Mongo.Collection wordt aangepast. ReactiveDict is op dezelfde manier, maar synced niet met de server waardoor het alleen geschikt is voor tijdelijke UI changes zoals filters. Op deze manier kan je bijvoorbeeld tijdelijk tasks die al klaar zijn niet laten zien. 
 ReactiveDict voeg je toe door in de CLI `meteor add reactive-dict` te typen. Vervolgens maak je een nieuwe ReactiveDict waar de status van een variabele zal worden opgeslagen, in dit geval de status van de checkbox. Met andere woorden of de filter aan staat of niet.
 Daarna wordt er in de body.helper gechecked of de filter aanstaat, zo ja dan zal alles behalve de gecheckte boxes gereturned worden.<br>
+
 <img src="img/app-overview-2.PNG" alt="" /><br>
-<img src="img/app-overview-3.PNG" alt="" /><br>
+
+<img src="img/app-overview-3.PNG" alt="" /><br><br>
+
 
 
 #### Accounts
 Meteor heeft ook packages om makkelijk accounts te kunnen creëren. In de app directory voegen we volgende packages toe: `meteor add accounts-ui accounts-password`. Door `{{> loginButtons}}` toe the voegen in the body.html en `import '../imports/startup/accounts-config.js';` in main.js heb al een login aangemaakt. Dit heeft op dit moment nog geen functie, maar is al super snel gedaan. Zo kan je bijvoorbeeld per task zien van welke account die is.<br>
-<img src="img/accounts.PNG" alt="" /><br>
+
+<img src="img/accounts.PNG" alt="" /><br><br>
 
 
 Op deze manier kan je bijvoorbeeld ook content enkel voor het juiste account laten zien. 
@@ -146,7 +155,7 @@ En onze template in task.html krijgt een if-statement:
 ([Zie youtube tutorial](https://www.youtube.com/watch?v=v9n9jkwunzU&list=PLLnpHn493BHECNl9I8gwos-hEfFrer7TV&index=19))
 <br><br>
 <img src="img/account-bert.PNG" alt="" /><br>
-<img src="img/account-admin.PNG" alt="" /><br>
+<img src="img/account-admin.PNG" alt="" /><br><br>
 
 
 
@@ -215,7 +224,7 @@ Template.task.events({
 
 
 
-***Optimistic UI***
+*Optimistic UI*
 
 We definiëren de metods op zowel de client als server side zodat er een *optimistic ui* bestaat. 
 Dit gebeurd doordat er twee dingen tegelijk gebeuren op het moment dat een Meteor.call gebeurd, namelijk
@@ -267,15 +276,16 @@ if (Meteor.isServer) {
 }
 ```
 
-
+<br><br>
 
 ## Getest
 Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping) gevolgt (niet zelf gemaakt). Per stap heb ik de code gedownload, uitgeprobeerd en proberen te begrijpen. De meeste stappen snapte ik wel, maar om het zelf te maken is op het moment nog moeilijk. Helaas veel errors tegen gekomen vanaf stap4, zonder ze te kunnen oplossen.<br>
-<img src="img/whatsapp-3.PNG" alt="" /><br>
+
+<img src="img/whatsapp-3.PNG" alt="" />
 <img src="img/whatsapp-4.PNG" alt="" /><br>
 <img src="img/whatsapp-4-error.PNG" alt="" />
 
-
+<br><br>
 
 
 ## Findings
@@ -293,7 +303,7 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
 - Super makkelijk om grote platforms te intergreren om in te loggen, zie [deze link](https://guide.meteor.com/accounts.html#oauth)
 
 
-
+<br><br>
 
 ## Extra Resources
 - Official Meteor Docs
@@ -329,7 +339,7 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
  - https://stackoverflow.com/questions/15252754/if-statements-in-handlebars
 
 
-
+<br><br>
 
 
 ## Logboek
