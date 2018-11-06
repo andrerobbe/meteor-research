@@ -19,7 +19,7 @@
 - [Extra Resources](#extra-resources)
 - [Logboek](#logboek)
 
-<br><br>
+<br>
 
 ## Waarom?
 Ik was op zoek naar Javascript frameworks en keek naar wat populair was. Ik wilde eigenlijk met Vue beginnen, maar aangezien dit al een veel gekozen onderwerp is en het op stage op bod kan komen, ben ik overgestapt naar Meteor.
@@ -78,9 +78,9 @@ We gaan nu een collectie van taken aanmaken en die laten importeren door de serv
 `import { Mongo } from 'meteor/mongo';
 export const Tasks = new Mongo.Collection('tasks');`
 Dit plaatsen we in een nieuwe API folder.
-We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
+We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld: `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
 
-<br>
+
 
 #### Forms
 Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html en passen onze body.js aan voor de submit van de form.<br>
@@ -279,7 +279,7 @@ if (Meteor.isServer) {
 <br><br>
 
 ## Getest
-Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping) gevolgt (niet zelf gemaakt). Per stap heb ik de code gedownload, uitgeprobeerd en proberen te begrijpen. De meeste stappen snapte ik wel, maar om het zelf te maken is op het moment nog moeilijk. Helaas veel errors tegen gekomen vanaf stap4, zonder ze te kunnen oplossen.<br>
+Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping) gevolgt (niet zelf gemaakt). Per stap heb ik de code gedownload, uitgeprobeerd en proberen te begrijpen. De meeste stappen snapte ik wel, maar om het zelf te maken is op het moment nog moeilijk. Helaas veel errors tegen gekomen vanaf stap vier, zonder ze te kunnen oplossen. Zie [logboek](#logboek) 2 november.<br>
 
 <img src="img/whatsapp-3.PNG" alt="" />
 <img src="img/whatsapp-4.PNG" alt="" /><br>
@@ -290,14 +290,14 @@ Verder heb ik [deze WhatsApp Clone](https://angular-meteor.com/tutorials/whatsap
 
 ## Findings
 - Interessant is dat er nog meerdere mogelijkheden zijn om je app te beginnen.
-<img src="img/app-template.PNG" alt="" />
+  <img src="img/app-template.PNG" alt="" />
 
 - NPM hoeft niet geïnstalleerd te zijn ookal gebruikt Meteor dit wel. Dit komt doordat het in Meteor zelf zit. Je kan dus `meteor npm install` doen. Zie ook [deze link](https://guide.meteor.com/using-npm-packages.html#installing-npm) voor informatie rond --save, -dev en --production
 
 - Je kan de app runnen in een IOS of Android emulator d.m.v. `meteor add-platform ios` of `meteor add-platform android`.
 
-- De pure JS implentatie van bcrypt (login) werkt, maar is veel langzamer./
-<img src="img/account-package.PNG" alt="" /><br>
+- De pure JS implentatie van bcrypt (login) werkt, maar is veel langzamer.<br>
+  <img src="img/account-package.PNG" alt="" /><br>
 Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-in-console-following-instructions-crashes-app/44889), maar met een simpele restart was dit gefixed.
 
 - Super makkelijk om grote platforms te intergreren om in te loggen, zie [deze link](https://guide.meteor.com/accounts.html#oauth)
@@ -307,9 +307,9 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
 
 ## Extra Resources
 - Official Meteor Docs
- - https://docs.meteor.com/
+  - https://docs.meteor.com/
 - Repository of packages for Meteor
- - https://atmospherejs.com/
+  - https://atmospherejs.com/
 - Organized list of Meteor Packages
   - https://github.com/Urigo/awesome-meteor
 - Meteor Spacebar Compiler Docs
@@ -317,29 +317,31 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
 - Meteor ReactiveDict Packages
   - https://atmospherejs.com/meteor/reactive-dict
 - Youtube Series on Meteor
- - https://www.youtube.com/watch?v=4l4pG0a25qs&index=2&list=PLLnpHn493BHFYZUSK62aVycgcAouqBt7V
+  - https://www.youtube.com/watch?v=4l4pG0a25qs&index=2&list=PLLnpHn493BHFYZUSK62aVycgcAouqBt7V
 - Meteor Account Documentation
- - https://docs.meteor.com/api/accounts.html
+  - https://docs.meteor.com/api/accounts.html
 - MongoDB Docs
- - https://docs.mongodb.com/v3.2/reference/
+  - https://docs.mongodb.com/v3.2/reference/
 - Mongol Meteor devtools
- - https://github.com/msavin/Mongol-meteor-devtools
+  - https://github.com/msavin/Mongol-meteor-devtools
 - Meteor Development Tools
- - http://meteor.toys/
+  - http://meteor.toys/
 - WhatsApp Clone
- - https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping
+  - https://angular-meteor.com/tutorials/whatsapp/meteor/bootstrapping
 
 - Direct download for Meteor installation package
- - https://packages.meteor.com/bootstrap-link?arch=os.windows.x86_64
+  - https://packages.meteor.com/bootstrap-link?arch=os.windows.x86_64
 - Check PATH variable on windows
- - https://www.computerhope.com/issues/ch000549.htm
+  - https://www.computerhope.com/issues/ch000549.htm
 - Meteor onLogin event
- - https://stackoverflow.com/questions/16350424/meteor-js-on-login-event
+  - https://stackoverflow.com/questions/16350424/meteor-js-on-login-event
 - If statements in Handlebars
- - https://stackoverflow.com/questions/15252754/if-statements-in-handlebars
+  - https://stackoverflow.com/questions/15252754/if-statements-in-handlebars
+- Meteor $timeout.cancel() error
+  - https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60
 
 
-<br><br>
+<br>
 
 
 ## Logboek
@@ -368,8 +370,8 @@ Dit resulteerde wel in [deze error](https://forums.meteor.com/t/bcrypt-warnings-
  - Getest (whatsapp clone), veel errors
 
 **2 nov 2018**
- - Getest (whatsapp clone), proberen om errors op te lossen. Iemand anders heeft precies hetzelfde probleem gisteren op  [github](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60) gepost. Ik heb nog geen succes tot nu toe helaas.
+ - Getest (whatsapp clone), proberen om errors op te lossen. Iemand anders heeft precies hetzelfde probleem gisteren op [github](https://github.com/Urigo/Ionic-MeteorCLI-WhatsApp/issues/60) gepost. Ik heb nog geen succes tot nu toe helaas.
  - Extra Resources
 
-**5 nov 2018**
+**5 / 6 nov 2018**
  - Omzetten naar .md en uploaden naar git
