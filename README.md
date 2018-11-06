@@ -35,13 +35,14 @@ Ik ben via google bij de [officiële site](https://www.meteor.com/install) van m
  ```
 - Daarna in cmd: `choco install meteor`
 - Er komt een vraag in de CLI of het script mag runnen, antwoord `y`
+<img src="img/meteor-install.png" alt="" />
+![screenshot of meteor install](/img/meteor-install.png "meteor install")
 
 #### Installatie voor Mac:
 - In cmd: `curl https://install.meteor.com/ | sh`
 
 
-Tijdens de installatie bleek de extracting stap super lang te duren.
-https://github.com/meteor/meteor/issues/7688
+Tijdens de installatie bleek de extracting stap super lang te duren. [Zie issue #7688](https://github.com/meteor/meteor/issues/7688)
 <img src="img/meteor-install-extract.png" alt="" />
 Eerst heb ik naar mijn PATH variabelen gekeken zoals in de de comments van deze link staat. Daarna heb ik tijdelijk tar.exe in system32 gerenamed (gevonden via `where tar`), omdat Meteor hier ook mee werkt een conflicten kon geven. Uiteindelijk blijkt het deactiveren van windows firewall de oplossing te zijn, samen met heel veel gedueld. De installatie is traag alsook nieuwe apps maken.
 Met de firewall disabled schijnt er ook betere performance te zijn volgens meteor zelf.
