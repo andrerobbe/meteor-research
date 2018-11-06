@@ -69,7 +69,7 @@ We hebben de app gemaakt zoals hierboven beschreven en gaan het nu verder uitwer
 
 De HTML in Meteor heeft naast body en head tags ook de `<template>` tag, alles in deze tag wordt gecompileerd naar Meteor templates waar na je kan verwijzen in HTML met `{{> templateName}}` of in JS met `Template.templateName`. Verder werkt Meteor met 'spacebars' packge voor het compilen. Check de Extra Resources voor meer informatie hierover. Dit gebruiken we ook in onze body.html in de import folder.<br>
 
-<img src="img/body-html-1.PNG" alt="" /><br>
+<img src="img/body-html-1.PNG" alt="" /><br><br>
 
 
 
@@ -80,7 +80,7 @@ export const Tasks = new Mongo.Collection('tasks');`
 Dit plaatsen we in een nieuwe API folder.
 We kunnen onze database via de CLI gebruiken door `meteor mongo` te typen en daarin een task in te geven zoals bijvoorbeeld: `db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`.
 
-
+<br>
 
 #### Forms
 Dit moet natuurlijk ook via de app zelf kunnen, dus we voegen een form toe aan onze body.html en passen onze body.js aan voor de submit van de form.<br>
@@ -138,7 +138,7 @@ Template.task.helpers({
 
 En onze template in task.html krijgt een if-statement:
 
-```Javascript
+```HTML
 <template name="task">
   {{#if isOwner}}
     <li class="{{#if checked}}checked{{/if}}">
